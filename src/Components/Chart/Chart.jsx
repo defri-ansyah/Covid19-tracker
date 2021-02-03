@@ -1,9 +1,19 @@
 import React from "react";
 import { Doughnut  } from "react-chartjs-2";
 import styles from "./Chart.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchData } from '../../configs/redux/actions'
+import { useEffect } from "react";
 
-const Chart = ({ data: { confirmed, recovered, deaths } }) => {
+const Chart = ( ) => {
   
+  const { confirmed, recovered, deaths } = useSelector(state => state.data.data)
+
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(fetchData())
+  }, [dispatch])
+
   const barChart = confirmed ? (
     <Doughnut 
       data={{

@@ -1,13 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Card, CardContent, Typography, Grid } from "@material-ui/core";
 import styles from "./Cards.module.css";
 import CountUp from "react-countup";
 import cx from "classnames";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchData } from '../../configs/redux/actions'
 
 const Cards = ({
-  data: { confirmed, recovered, deaths, lastUpdate },
   country,
 }) => {
+  const { confirmed, recovered, deaths, lastUpdate } = useSelector(state => state.data.data)
+
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(fetchData())
+  }, [dispatch])
+  
   if (!confirmed) {
     return "Loading...";
   }
